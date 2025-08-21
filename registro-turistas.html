@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro de Turistas - Viña Gran Hidalgo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wine-primary: #722F37;
+      --wine-secondary: #8B4A57;
+      --wine-accent: #A67B5B;
+      --vine-green: #4A6741;
+      --vine-light: #7A8471;
+      --gold-accent: #D4AF37;
+      --cream: #FBF8F3;
+      --deep-burgundy: #2D1B2E;
+      --tourist-orange: #E67E22;
+      --tourist-purple: #9B59B6;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: linear-gradient(135deg, #722F37 0%, #2D1B2E 50%, #E67E22 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Fondo animado */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(230, 126, 34, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(155, 89, 182, 0.06) 0%, transparent 50%);
+      z-index: -2;
+    }
+    
+    /* Elementos flotantes temáticos de turismo */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-element {
+      position: absolute;
+      color: rgba(230, 126, 34, 0.15);
+      font-size: 1.5rem;
+      animation: float 25s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .container {
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .main-card {
+      background: rgba(251, 248, 243, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 
+        0 20px 40px rgba(45, 27, 46, 0.3),
+        0 0 0 1px rgba(230, 126, 34, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .card-header {
+      background: linear-gradient(135deg, var(--wine-primary) 0%, var(--tourist-orange) 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.06)"/></svg>');
+      animation: sparkle 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes sparkle {
+      0% { opacity: 0.3; }
+      100% { opacity: 0.8; }
+    }
+    
+    .back-btn {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      transform: translateX(-3px);
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    
+    .logo-icon {
+      font-size: 3rem;
+      margin-right: 1rem;
+      color: var(--gold-accent);
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+    }
+    
+    .company-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      font-weight: 300;
+      margin-top: 0.5rem;
+    }
+    
+    .form-section {
+      padding: 2.5rem;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--wine-primary);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .section-title i {
+      margin-right: 1rem;
+      color: var(--tourist-orange);
+    }
+    
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--wine-primary), var(--tourist-orange));
+      border-radius: 2px;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      font-weight: 600;
+      color: var(--wine-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-label i {
+      margin-right: 0.5rem;
+      color: var(--tourist-orange);
+      width: 20px;
+    }
+    
+    .form-control {
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .form-control:focus {
+      border-color: var(--tourist-orange);
+      box-shadow: 0 0 0 0.25rem rgba(230, 126, 34, 0.15);
+      background: white;
+      transform: translateY(-1px);
+    }
+    
+    .form-select {
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .form-select:focus {
+      border-color: var(--tourist-orange);
+      box-shadow: 0 0 0 0.25rem rgba(230, 126, 34, 0.15);
+      background: white;
+    }
+    
+    /* Tarjetas de tour con iconos */
+    .tour-card {
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tour-card:hover {
+      border-color: var(--tourist-orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(230, 126, 34, 0.15);
+    }
+    
+    .tour-card.selected {
+      border-color: var(--tourist-orange);
+      background: rgba(230, 126, 34, 0.05);
+    }
+    
+    .tour-card .tour-icon {
+      font-size: 2rem;
+      color: var(--tourist-orange);
+      margin-bottom: 0.5rem;
+    }
+    
+    .tour-card .tour-title {
+      font-weight: 600;
+      color: var(--wine-primary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .tour-card .tour-description {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    
+    .btn-container {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn-custom {
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-save {
+      background: linear-gradient(135deg, var(--tourist-orange) 0%, #D35400 100%);
+      color: white;
+    }
+    
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+      color: white;
+    }
+    
+    .btn-search {
+      background: linear-gradient(135deg, var(--tourist-purple) 0%, #8E44AD 100%);
+      color: white;
+    }
+    
+    .btn-search:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
+      color: white;
+    }
+    
+    .btn-cancel {
+      background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+      color: white;
+    }
+    
+    .btn-cancel:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+      color: white;
+    }
+    
+    .success-alert {
+      background: linear-gradient(135deg, rgba(230, 126, 34, 0.1) 0%, rgba(46, 204, 113, 0.1) 100%);
+      border: 1px solid rgba(230, 126, 34, 0.3);
+      color: var(--tourist-orange);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      display: none;
+      align-items: center;
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .success-alert i {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: var(--tourist-orange);
+    }
+    
+    /* Modal personalizado para búsqueda */
+    .modal-content {
+      border-radius: 20px;
+      border: none;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .modal-header {
+      background: linear-gradient(135deg, var(--tourist-purple) 0%, var(--wine-primary) 100%);
+      color: white;
+      border-radius: 20px 20px 0 0;
+      border: none;
+    }
+    
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    
+    .btn-close {
+      filter: invert(1);
+    }
+    
+    /* Estadísticas de visitas */
+    .stats-container {
+      background: rgba(230, 126, 34, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--tourist-orange);
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-top: 0.25rem;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .company-title {
+        font-size: 1.8rem;
+      }
+      
+      .form-section {
+        padding: 1.5rem;
+      }
+      
+      .btn-container {
+        flex-direction: column;
+      }
+      
+      .btn-custom {
+        width: 100%;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    /* Animaciones de entrada */
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Efecto especial para campos de fecha */
+    .date-special {
+      background: linear-gradient(135deg, rgba(230, 126, 34, 0.1), rgba(155, 89, 182, 0.1));
+    }
+  </style>
+</head>
+<body>
+  <!-- Elementos flotantes temáticos -->
+  <div class="floating-elements">
+    <i class="fas fa-camera floating-element" style="left: 10%; animation-delay: 0s;"></i>
+    <i class="fas fa-map floating-element" style="left: 20%; animation-delay: 3s;"></i>
+    <i class="fas fa-wine-glass floating-element" style="left: 30%; animation-delay: 6s;"></i>
+    <i class="fas fa-utensils floating-element" style="left: 40%; animation-delay: 9s;"></i>
+    <i class="fas fa-users floating-element" style="left: 50%; animation-delay: 12s;"></i>
+    <i class="fas fa-star floating-element" style="left: 60%; animation-delay: 15s;"></i>
+    <i class="fas fa-heart floating-element" style="left: 70%; animation-delay: 18s;"></i>
+    <i class="fas fa-sun floating-element" style="left: 80%; animation-delay: 21s;"></i>
+    <i class="fas fa-compass floating-element" style="left: 90%; animation-delay: 24s;"></i>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="main-card fade-in">
+          <!-- Header -->
+          <div class="card-header">
+            <a href="#" class="back-btn">
+              <i class="fas fa-arrow-left me-2"></i>Volver
+            </a>
+            <div class="logo-container">
+              <i class="fas fa-wine-glass-alt logo-icon"></i>
+              <div>
+                <h1 class="company-title">Viña Gran Hidalgo</h1>
+                <p class="subtitle">Experiencia Enoturística Premium</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulario -->
+          <div class="form-section">
+            <h2 class="section-title">
+              <i class="fas fa-users"></i>
+              Registro de Visitantes
+            </h2>
+
+            <!-- Estadísticas de visitas -->
+            <div class="stats-container">
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-number">1,247</div>
+                  <div class="stat-label">Visitantes este mes</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">89%</div>
+                  <div class="stat-label">Satisfacción promedio</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">156</div>
+                  <div class="stat-label">Tours programados</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">4.8★</div>
+                  <div class="stat-label">Calificación promedio</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="success-alert" id="successAlert">
+              <i class="fas fa-check-circle"></i>
+              <span>¡Visitante registrado exitosamente! Tour confirmado.</span>
+            </div>
+
+            <form id="touristForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nombreTurista" class="form-label">
+                    <i class="fas fa-user"></i>
+                    Nombre Completo del Visitante
+                  </label>
+                  <input type="text" class="form-control" id="nombreTurista" 
+                         placeholder="Ingrese nombre y apellidos completos" required>
+                </div>
+                <div class="form-group">
+                  <label for="email" class="form-label">
+                    <i class="fas fa-envelope"></i>
+                    Correo Electrónico
+                  </label>
+                  <input type="email" class="form-control" id="email" 
+                         placeholder="visitante@email.com" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="telefono" class="form-label">
+                    <i class="fas fa-phone"></i>
+                    Teléfono de Contacto
+                  </label>
+                  <input type="tel" class="form-control" id="telefono" 
+                         placeholder="+56 9 1234 5678">
+                </div>
+                <div class="form-group">
+                  <label for="pais" class="form-label">
+                    <i class="fas fa-globe"></i>
+                    País de Origen
+                  </label>
+                  <select class="form-select" id="pais">
+                    <option value="" disabled selected>Seleccione su país</option>
+                    <option value="chile">🇨🇱 Chile</option>
+                    <option value="argentina">🇦🇷 Argentina</option>
+                    <option value="brasil">🇧🇷 Brasil</option>
+                    <option value="eeuu">🇺🇸 Estados Unidos</option>
+                    <option value="europa">🇪🇺 Europa</option>
+                    <option value="otro">🌍 Otro país</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fechaVisita" class="form-label">
+                    <i class="fas fa-calendar-alt"></i>
+                    Fecha de Visita
+                  </label>
+                  <input type="date" class="form-control date-special" id="fechaVisita" required>
+                </div>
+                <div class="form-group">
+                  <label for="numPersonas" class="form-label">
+                    <i class="fas fa-users"></i>
+                    Número de Personas
+                  </label>
+                  <select class="form-select" id="numPersonas" required>
+                    <option value="" disabled selected>¿Cuántas personas?</option>
+                    <option value="1">1 persona</option>
+                    <option value="2">2 personas</option>
+                    <option value="3-5">3-5 personas</option>
+                    <option value="6-10">6-10 personas (grupo)</option>
+                    <option value="11+">Más de 10 personas</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-route"></i>
+                  Tipo de Experiencia Deseada
+                </label>
+                <div class="row">
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="tour-card" data-tour="degustacion">
+                      <div class="tour-icon">🍷</div>
+                      <div class="tour-title">Degustación Premium</div>
+                      <div class="tour-description">Cata de vinos selectos con sommelier experto</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="tour-card" data-tour="recorrido">
+                      <div class="tour-icon">🚜</div>
+                      <div class="tour-title">Recorrido por Viñedos</div>
+                      <div class="tour-description">Tour por los campos de cultivo y bodegas</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="tour-card" data-tour="gastronomico">
+                      <div class="tour-icon">🍽️</div>
+                      <div class="tour-title">Experiencia Gastronómica</div>
+                      <div class="tour-description">Maridaje de vinos con platos gourmet</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="tour-card" data-tour="fotografico">
+                      <div class="tour-icon">📸</div>
+                      <div class="tour-title">Tour Fotográfico</div>
+                      <div class="tour-description">Sesión profesional en paisajes únicos</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="tour-card" data-tour="educativo">
+                      <div class="tour-icon">🎓</div>
+                      <div class="tour-title">Workshop Educativo</div>
+                      <div class="tour-description">Aprende sobre el proceso vitivinícola</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="tour-card" data-tour="completo">
+                      <div class="tour-icon">⭐</div>
+                      <div class="tour-title">Experiencia Completa</div>
+                      <div class="tour-description">Combinación de todas las actividades</div>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="tipoTour" required>
+              </div>
+
+              <div class="form-group">
+                <label for="comentarios" class="form-label">
+                  <i class="fas fa-comment-dots"></i>
+                  Observaciones y Preferencias Especiales
+                </label>
+                <textarea class="form-control" id="comentarios" rows="4" 
+                          placeholder="Mencione alergias alimentarias, preferencias especiales, celebraciones, o cualquier información relevante para personalizar su experiencia..."></textarea>
+              </div>
+
+              <div class="btn-container">
+                <button type="button" class="btn btn-custom btn-cancel" onclick="limpiarFormulario()">
+                  <i class="fas fa-times me-2"></i>Cancelar
+                </button>
+                <button type="button" class="btn btn-custom btn-search" data-bs-toggle="modal" data-bs-target="#searchModal">
+                  <i class="fas fa-search me-2"></i>Ver Registros
+                </button>
+                <button type="submit" class="btn btn-custom btn-save">
+                  <i class="fas fa-calendar-check me-2"></i>Confirmar Reserva
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p>© 2025 Experiencias Enoturísticas - Viña Gran Hidalgo | Todos los derechos reservados</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de búsqueda -->
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchModalLabel">
+            <i class="fas fa-search me-2"></i>Registro de Visitantes
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr style="background: linear-gradient(135deg, var(--tourist-orange), var(--wine-primary)); color: white;">
+                  <th><i class="fas fa-user me-1"></i>Visitante</th>
+                  <th><i class="fas fa-calendar me-1"></i>Fecha</th>
+                  <th><i class="fas fa-route me-1"></i>Tour</th>
+                  <th><i class="fas fa-globe me-1"></i>Origen</th>
+                  <th><i class="fas fa-users me-1"></i>Personas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>María González</strong><br><small>maria@email.com</small></td>
+                  <td>15/06/2025</td>
+                  <td><span class="badge bg-primary">Degustación Premium</span></td>
+                  <td>🇨🇱 Chile</td>
+                  <td>2 personas</td>
+                </tr>
+                <tr>
+                  <td><strong>John Smith</strong><br><small>john@email.com</small></td>
+                  <td>14/06/2025</td>
+                  <td><span class="badge bg-success">Experiencia Completa</span></td>
+                  <td>🇺🇸 Estados Unidos</td>
+                  <td>4 personas</td>
+                </tr>
+                <tr>
+                  <td><strong>Carlos Mendoza</strong><br><small>carlos@email.com</small></td>
+                  <td>13/06/2025</td>
+                  <td><span class="badge bg-warning">Tour Fotográfico</span></td>
+                  <td>🇦🇷 Argentina</td>
+                  <td>2 personas</td>
+                </tr>
+                <tr>
+                  <td><strong>Ana Silva</strong><br><small>ana@email.com</small></td>
+                  <td>12/06/2025</td>
+                  <td><span class="badge bg-info">Experiencia Gastronómica</span></td>
+                  <td>🇧🇷 Brasil</td>
+                  <td>6 personas</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i>Cerrar
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-download me-1"></i>Exportar Lista
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Establecer fecha actual por defecto (mínimo hoy)
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('fechaVisita').setAttribute('min', today);
+    document.getElementById('fechaVisita').value = today;
+
+    // Variables globales
+    let selectedTour = '';
+
+    function limpiarFormulario() {
+      document.getElementById('touristForm').reset();
+      document.getElementById('fechaVisita').value = today;
+      
+      // Limpiar selección de tours
+      document.querySelectorAll('.tour-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      selectedTour = '';
+      document.getElementById('tipoTour').value = '';
+    }
+
+    // Manejo de selección de tours
+    document.querySelectorAll('.tour-card').forEach(card => {
+      card.addEventListener('click', function() {
+        // Remover selección previa
+        document.querySelectorAll('.tour-card').forEach(c => c.classList.remove('selected'));
+        
+        // Agregar selección actual
+        this.classList.add('selected');
+        selectedTour = this.dataset.tour;
+        document.getElementById('tipoTour').value = selectedTour;
+        
+        // Efecto visual
+        this.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 200);
+      });
+    });
+
+    // Manejo del formulario
+    document.getElementById('touristForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validar que se haya seleccionado un tour
+      if (!selectedTour) {
+        alert('Por favor seleccione un tipo de experiencia');
+        return;
+      }
+      
+      const formData = {
+        nombre: document.getElementById('nombreTurista').value,
+        email: document.getElementById('email').value,
+        telefono: document.getElementById('telefono').value,
+        pais: document.getElementById('pais').value,
+        fechaVisita: document.getElementById('fechaVisita').value,
+        numPersonas: document.getElementById('numPersonas').value,
+        tipoTour: selectedTour,
+        comentarios: document.getElementById('comentarios').value,
+        timestamp: new Date().toISOString()
+      };
+
+      // Simular guardado de datos
+      console.log('Registro de Turista:', formData);
+      
+      // Mostrar alerta de éxito
+      const alert = document.getElementById('successAlert');
+      alert.style.display = 'flex';
+      
+      // Scroll hacia arriba para ver la alerta
+      alert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+      // Actualizar estadísticas (simulado)
+      updateStats();
+      
+      // Ocultar alerta después de 5 segundos
+      setTimeout(() => {
+        alert.style.display = 'none';
+      }, 5000);
+      
+      // Limpiar formulario
+      limpiarFormulario();
+    });
+
+    // Actualizar estadísticas (simulado)
+    function updateStats() {
+      const statNumbers = document.querySelectorAll('.stat-number');
+      statNumbers[0].textContent = (parseInt(statNumbers[0].textContent.replace(',', '')) + 1).toLocaleString();
+      
+      // Efecto de animación en las estadísticas
+      statNumbers.forEach((stat, index) => {
+        stat.style.transform = 'scale(1.2)';
+        stat.style.color = 'var(--tourist-orange)';
+        setTimeout(() => {
+          stat.style.transform = 'scale(1)';
+          stat.style.color = 'var(--tourist-orange)';
+        }, 300 + (index * 100));
+      });
+    }
+
+    // Animación de entrada para los elementos del formulario
+    document.addEventListener('DOMContentLoaded', function() {
+      const formGroups = document.querySelectorAll('.form-group');
+      formGroups.forEach((group, index) => {
+        group.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+      });
+      
+      // Animar tarjetas de tour
+      const tourCards = document.querySelectorAll('.tour-card');
+      tourCards.forEach((card, index) => {
+        card.style.animation = `fadeInUp 0.6s ease-out ${0.5 + (index * 0.1)}s both`;
+      });
+    });
+
+    // Efectos de focus mejorados
+    document.querySelectorAll('.form-control, .form-select').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'scale(1.02)';
+        this.parentElement.style.transition = 'transform 0.2s ease';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'scale(1)';
+      });
+    });
+
+    // Validación en tiempo real del teléfono
+    document.getElementById('telefono').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/[^0-9+\s]/g, '');
+      e.target.value = value;
+    });
+
+    // Autocompletado inteligente para email basado en nombre
+    document.getElementById('nombreTurista').addEventListener('blur', function() {
+      const emailField = document.getElementById('email');
+      if (!emailField.value && this.value) {
+        const nombres = this.value.toLowerCase().split(' ');
+        if (nombres.length >= 2) {
+          const sugerencia = `${nombres[0]}.${nombres[nombres.length-1]}@email.com`;
+          emailField.placeholder = `Sugerencia: ${sugerencia}`;
+        }
+      }
+    });
+
+    // Efecto de partículas en movimiento
+    function createFloatingParticle() {
+      const particles = document.querySelector('.floating-elements');
+      const icons = [
+        'fas fa-camera', 'fas fa-wine-glass', 'fas fa-heart', 
+        'fas fa-star', 'fas fa-sun', 'fas fa-map'
+      ];
+      const particle = document.createElement('i');
+      particle.className = `${icons[Math.floor(Math.random() * icons.length)]} floating-element`;
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = '0s';
+      particle.style.animationDuration = (20 + Math.random() * 10) + 's';
+      particles.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 35000);
+    }
+
+    // Crear partículas periódicamente
+    setInterval(createFloatingParticle, 5000);
+
+    // Efecto especial para fechas futuras
+    document.getElementById('fechaVisita').addEventListener('change', function() {
+      const selectedDate = new Date(this.value);
+      const today = new Date();
+      const diffTime = selectedDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays > 7) {
+        this.style.background = 'linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(155, 89, 182, 0.2))';
+        this.title = 'Reserva con anticipación - ¡Excelente planificación!';
+      } else if (diffDays > 0) {
+        this.style.background = 'linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1))';
+        this.title = 'Reserva próxima - Perfecto timing';
+      }
+    });
+
+    // Easter egg: animación especial para fechas especiales
+    document.getElementById('fechaVisita').addEventListener('focus', function() {
+      const date = new Date();
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+      if (isWeekend) {
+        this.style.boxShadow = '0 0 20px rgba(230, 126, 34, 0.5)';
+        setTimeout(() => {
+          this.style.boxShadow = '';
+        }, 2000);
+      }
+    });
+
+    // Función para mostrar tooltip personalizado en tour cards
+    document.querySelectorAll('.tour-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        const tourType = this.dataset.tour;
+        const tooltips = {
+          'degustacion': 'Duración: 2 horas | Incluye: 6 vinos premium | Precio: $25.000',
+          'recorrido': 'Duración: 3 horas | Incluye: Transporte | Precio: $18.000',
+          'gastronomico': 'Duración: 4 horas | Incluye: Almuerzo gourmet | Precio: $45.000',
+          'fotografico': 'Duración: 2.5 horas | Incluye: Sesión profesional | Precio: $35.000',
+          'educativo': 'Duración: 3 horas | Incluye: Certificado | Precio: $22.000',
+          'completo': 'Duración: 6 horas | Incluye: Todo | Precio: $65.000'
+        };
+        
+        this.title = tooltips[tourType] || 'Experiencia única en viña';
+      });
+    });
+
+    // Navegación por teclado para las tarjetas de tour
+    document.addEventListener('keydown', function(e) {
+      if (e.key >= '1' && e.key <= '6') {
+        const cardIndex = parseInt(e.key) - 1;
+        const cards = document.querySelectorAll('.tour-card');
+        if (cards[cardIndex]) {
+          cards[cardIndex].click();
+          cards[cardIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
